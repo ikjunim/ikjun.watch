@@ -43,6 +43,23 @@ html {
     z-index: 100;
 }
 
+#keyboard-hack {
+    display: none;
+}
+
+@media (pointer:none), (pointer:coarse) {
+    #keyboard-hack {
+        position: absolute;
+        min-width: 35vw;
+        min-height: 23vh;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        pointer-events: all;
+        background-color: transparent;
+    }
+}
+
 #matter-container {
     position: absolute;
     pointer-events: all;
