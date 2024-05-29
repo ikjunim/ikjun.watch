@@ -1,0 +1,51 @@
+:root {
+    --black: #121113;
+    --blue: #227c9d;
+    --green: #17c3b2;
+    --yellow: #ffcb77;
+    --white: #fef9ef;
+    --red: #fe6d73;
+}
+
+@font-face {
+    font-family: origami;
+    src: url('./Untitled1.ttf');
+}
+
+.hidden {
+    display: none;
+}
+
+body,
+html {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    background-color: var(--black);
+}
+
+.main-wrapper {
+    position: relative;
+    overflow: hidden;
+    height: 100%;
+    font-family: origami;
+    color: var(--white);
+    font-size: 25vmin;
+    white-space: nowrap;
+    pointer-events: none;
+}
+
+.clock-display {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 100;
+}
+
+#matter-container {
+    position: absolute;
+    pointer-events: all;
+    width: 100%;
+    height: 100%;
+}
