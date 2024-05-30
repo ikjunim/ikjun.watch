@@ -56,4 +56,8 @@ class MatterInstance {
         this.render.canvas.width = width;
         this.render.canvas.height = height;
     }
+
+	diagonal() {
+		return this.container.clientWidth * this.container.clientWidth + this.container.clientHeight * this.container.clientHeight;
+	}
 }

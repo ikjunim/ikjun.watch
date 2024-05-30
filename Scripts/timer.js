@@ -1,7 +1,20 @@
 import Deque from "./deque.js";
 
-const numberForce = 4;
-const maxDigits = 60;
+const numberWords = {
+	"0": "zero",
+	"1": "one",
+	"2": "two",
+	"3": "three",
+	"4": "four",
+	"5": "five",
+	"6": "six",
+	"7": "seven",
+	"8": "eight",
+	"9": "nine",
+};
+
+const numberForce = 2;
+const maxDigits = Common.clamp(0.15 * Math.sqrt(matterInstance.diagonal()), 50, 100);
 
 function validateTimeArray(timeArray) {
     if (timeArray[2] * 10 + timeArray[3] > 59) {
@@ -108,8 +121,9 @@ export default class Timer {
         var string = millisecondsToString(milliseconds);
         if (this.running && !this.paused && this.display.innerHTML.localeCompare(string) != 0 && !document.hidden) {
             cloud.dance();
+			var randomVector = randomUnitVector(1);
             printer.print({
-                text: this.display.innerHTML.slice(string.length - 1),
+                text: Math.random() < 0.5 ? this.display.innerHTML.slice(string.length - 1) : numberWords[this.display.innerHTML.slice(string.length - 1)],
                 size: 0.02,
                 x: matterContainer.clientWidth * 0.5,
                 y: matterContainer.clientHeight * 0.5,
@@ -119,10 +133,10 @@ export default class Timer {
                 category: charCategory,
                 mask: charCategory,
             }).forEach(body => {
-                Body.setVelocity(body, randomUnitVector(body.mass * (randomFloat(numberForce/2, numberForce))));
+				Body.setVelocity(body, Vector.mult(randomVector, body.mass * (10000/Math.sqrt(matterInstance.diagonal())) * (randomFloat(numberForce/2, numberForce))))
                 this.spawned.pushBack(body);
             });
-            if (this.spawned.size() > maxDigits) {
+            while (this.spawned.size() > maxDigits) {
                 Composite.remove(matterInstance.engine.world, this.spawned.popFront());
             }
         }
@@ -158,7 +172,20 @@ export default class Timer {
         this.push(minutes % 10);
         this.push(Math.floor(seconds / 10));
         this.push(seconds % 10);
+
+		this.previewInput();
     }
+
+	replace(timeArray) {
+		this.empty();
+		this.push(timeArray[0]);
+		this.push(timeArray[1]);
+		this.push(timeArray[2]);
+		this.push(timeArray[3]);
+		this.push(timeArray[4]);
+		this.push(timeArray[5]);
+		this.previewInput();
+	}
 
     push(number) {
         if (this._length >= 6) return;
